@@ -1,260 +1,470 @@
 <?php
 include("dbcon.php");
-
 $message="";
+if(isset($_POST['order'])) {
+    $name=$_POST['name'];
+    $cake=$_POST['cake'];
+    $qty=$_POST['qty'];
+    $phone=$_POST['phone'];
+    $address=$_POST['address'];
 
-if(isset($_POST['order']))
-{
-$name=$_POST['name'];
-$cake=$_POST['cake'];
-$qty=$_POST['qty'];
-$phone=$_POST['phone'];
-$address=$_POST['address'];
+    $sql="INSERT INTO userOrder(customer_name,cake_type,quantity,phone,address)
+    VALUES('$name','$cake','$qty','$phone','$address')";
+    $result=mysqli_query($conn,$sql);
 
-$sql="INSERT INTO userOrder(customer_name,cake_type,quantity,phone,address)
-VALUES('$name','$cake','$qty','$phone','$address')";
-
-$result=mysqli_query($conn,$sql);
-
-if($result)
-{
-$message="Order placed successfully!";
-}
-else
-{
-$message="Order failed!";
-}
+    if($result) { $message="Order placed successfully!"; }
+    else { $message="Order failed!"; }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Bakery Order</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frem Bakery | Artisanal Sweets</title>
+    <style>
+        :root {
+            --primary: #8b3a2e;
+            --bg: #faf7f2;
+            --card-bg: #ffffff;
+            --text: #2d2424;
+            --accent: #e3d5ca;
+        }
 
-<style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-body{
-margin:0;
-font-family:Arial;
-background:#f5ebe0;
+       /* Refined Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: rgba(250, 247, 242, 0.8); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* Modern Glassmorphism effect */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(139, 58, 46, 0.1);
+    transition: all 0.3s ease;
 }
 
-/* Navbar */
-
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 60px;
-background:#f5ebe0;
+nav h2 {
+    color: var(--primary);
+    font-family: "serif";
+    font-size: 24px;
+    letter-spacing: 3px;
+    margin: 0;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
-nav h2{
-color:#6b3e26;
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+    margin: 0;
+    align-items: center;
 }
 
-nav ul{
-list-style:none;
-display:flex;
-gap:30px;
+nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    padding: 5px 0;
+    transition: 0.3s;
 }
 
-nav a{
-text-decoration:none;
-color:black;
-font-weight:bold;
+/* Subtle Hover Animation */
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
 }
 
-/* Hero Section */
-
-.hero{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:60px;
+nav a:hover {
+    color: var(--primary);
 }
 
-.hero-text{
-width:50%;
+nav a:hover::after {
+    width: 100%;
 }
 
-.hero-text h1{
-font-size:50px;
+/* Special Button Style for the Order Link */
+nav li:last-child a {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: 0.3s ease;
 }
 
-.hero-text button{
-padding:12px 25px;
-background:#8b3a2e;
-color:white;
-border:none;
-border-radius:20px;
-cursor:pointer;
+nav li:last-child a:hover {
+    background: #6b2e25;
+    box-shadow: 0 4px 15px rgba(139, 58, 46, 0.3);
 }
 
-.hero img{
-width:420px;
-border-radius:15px;
+nav li:last-child a::after {
+    display: none; /* Remove underline for the button */
 }
 
-/* Cake cards */
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 8%;
+            min-height: 60vh;
+        }
 
-.menu{
-padding:60px;
-text-align:center;
+        .hero-text { width: 45%; }
+
+        .hero-text h1 {
+            font-size: clamp(40px, 5vw, 64px);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            padding: 15px 35px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 58, 46, 0.2);
+        }
+
+        .hero img {
+            width: 45%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: 20px 20px 0px var(--accent);
+        }
+
+        /* Menu Section */
+        .menu { padding: 100px 8%; text-align: center; }
+
+        .menu h2 {
+            font-size: 32px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            transition: 0.4s;
+            border: 1px solid #eee;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .card h3 { margin: 20px 0 10px; font-size: 22px; }
+
+        .card p {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Order Section */
+        .order-section {
+            background: var(--accent);
+            padding: 100px 8%;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .order-container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .order-section h2 { text-align: center; margin-bottom: 30px; }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input, select, textarea {
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            background: #fdfdfd;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--primary); }
+
+        button[name="order"] {
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button[name="order"]:hover { opacity: 0.9; }
+
+        .success {
+            color: #2d6a4f;
+            background: #d8f3dc;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 40px; }
+            .hero-text { width: 100%; margin-bottom: 50px; }
+            .hero img { width: 100%; height: 300px; }
+            nav ul { display: none; }
+        }
+
+
+        /* Full Menu Section */
+.full-menu {
+    padding: 100px 8%;
+    background-color: #fff;
 }
 
-.cards{
-display:flex;
-justify-content:center;
-gap:30px;
-margin-top:40px;
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 80px;
+    margin-top: 50px;
 }
 
-.card{
-background:white;
-padding:15px;
-border-radius:15px;
-width:250px;
-box-shadow:0px 3px 10px rgba(0,0,0,0.1);
+.menu-category-title {
+    font-family: serif;
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 30px;
+    text-align: center;
+    grid-column: 1 / -1;
+    letter-spacing: 2px;
 }
 
-.card img{
-width:100%;
-border-radius:10px;
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #ccc;
+    transition: 0.3s;
 }
 
-.card h3{
-margin:10px 0;
+.menu-item:hover {
+    border-bottom: 1px solid var(--primary);
+    transform: translateX(5px);
 }
 
-/* Order form */
-
-.order-section{
-background:#e3d5ca;
-padding:60px;
-margin-top:40px;
+.item-info h4 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--text);
+    font-weight: 600;
 }
 
-.order-section h2{
-text-align:center;
+.item-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #888;
+    font-style: italic;
 }
 
-form{
-width:400px;
-margin:auto;
-display:flex;
-flex-direction:column;
-gap:15px;
+.item-price {
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 18px;
 }
 
-input,select,textarea{
-padding:10px;
-border-radius:5px;
-border:1px solid gray;
+@media (max-width: 768px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
 }
-
-button{
-padding:12px;
-background:#8b3a2e;
-color:white;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-.success{
-color:green;
-text-align:center;
-font-weight:bold;
-}
-
-</style>
-
+    </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-
 <nav>
-<h2>Frem Bakery</h2>
-
-<ul>
-<li><a href="#">Home</a></li>
-<li><a href="#">Menu</a></li>
-<li><a href="#">Order</a></li>
-</ul>
-
+    <div class="logo">
+        <h2>FREM</h2>
+    </div>
+    
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#order">Place Order</a></li>
+    </ul>
 </nav>
 
-<!-- HERO -->
-
 <section class="hero">
+    <div class="hero-text">
+        <h1>Sweet Moments <br>Start Here</h1>
+        <p>Experience the art of artisanal baking. Every cake is handcrafted with premium ingredients and a dash of love.</p>
+        <button class="cta-btn">Explore Menu</button>
+    </div>
+    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b" alt="Featured Dessert">
+</section>
 
-<div class="hero-text">
-
-<h1>Sweet Moments Start Here</h1>
-
-<p>Delicious cakes and desserts made fresh everyday.</p>
-
-<button>Explore Menu</button>
-
-</div>
-
-<img src="https://images.unsplash.com/photo-1551024601-bec78aea704b">
-
+<section class="menu" id="menu">
+    <h2>Our Signature Collection</h2>
+    <div class="cards">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Chocolate">
+            <h3>Midnight Chocolate</h3>
+            <p>$12.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1559620192-032c4bc4674e" alt="Strawberry">
+            <h3>Summer Strawberry</h3>
+            <p>$15.00</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa" alt="Vanilla">
+            <h3>Classic Vanilla</h3>
+            <p>$10.00</p>
+        </div>
+    </div>
 </section>
 
 <!-- MENU -->
+<section class="full-menu" id="full-menu">
+    <h3 class="menu-category-title">Explore Our Full Menu</h3>
+    
+    <div class="menu-grid">
+        <div class="menu-item">
+            <div class="item-info">
+                <h4>Midnight Chocolate Ganache</h4>
+                <p>Rich dark chocolate with velvet frosting</p>
+            </div>
+            <span class="item-price">$12.00</span>
+        </div>
 
-<section class="menu">
+        <div class="menu-item">
+            <div class="item-info">
+                <h4>Summer Strawberry Cream</h4>
+                <p>Fresh organic strawberries & whipped cream</p>
+            </div>
+            <span class="item-price">$15.00</span>
+        </div>
 
-<h2>Our Special Cakes</h2>
+        <div class="menu-item">
+            <div class="item-info">
+                <h4>Classic Madagascar Vanilla</h4>
+                <p>Authentic bean paste and buttery sponge</p>
+            </div>
+            <span class="item-price">$10.00</span>
+        </div>
 
-<div class="cards">
+        <div class="menu-item">
+            <div class="item-info">
+                <h4>Red Velvet Royale</h4>
+                <p>Traditional cocoa base with cream cheese swirl</p>
+            </div>
+            <span class="item-price">$14.00</span>
+        </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
-<h3>Chocolate Cake</h3>
-<p>$12</p>
-</div>
+        <div class="menu-item">
+            <div class="item-info">
+                <h4>Salted Caramel Drizzle</h4>
+                <p>Sweet & salty perfection with gold leaf</p>
+            </div>
+            <span class="item-price">$13.00</span>
+        </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1559620192-032c4bc4674e">
-<h3>Strawberry Cake</h3>
-<p>$15</p>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa">
-<h3>Vanilla Cake</h3>
-<p>$10</p>
-</div>
-
-</div>
-
+        <div class="menu-item">
+            <div class="item-info">
+                <h4>Lemon Zest Chiffon</h4>
+                <p>Light, airy, and refreshingly tangy</p>
+            </div>
+            <span class="item-price">$11.00</span>
+        </div>
+    </div>
 </section>
 
 
-
-<!-- ORDER FORM -->
-<section class="order-section">
-<h2>Place Your Order</h2>
-<p class="success"><?php echo $message; ?></p>
-<form method="POST">
-<input type="text" name="name" placeholder="Your Name" required>
-<select name="cake">
-<option>Chocolate Cake</option>
-<option>Strawberry Cake</option>
-<option>Vanilla Cake</option>
-</select>
-<input type="number" name="qty" placeholder="Quantity" required>
-<input type="text" name="phone" placeholder="Phone Number" required>
-<textarea name="address" placeholder="Delivery Address"></textarea>
-<button type="submit" name="order">Place Order</button>
-</form>
+<section class="order-section" id="order">
+    <div class="order-container">
+        <h2>Place Your Order</h2>
+        <?php if($message != ""): ?>
+            <p class="success"><?php echo $message; ?></p>
+        <?php endif; ?>
+        
+        <form method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <select name="cake">
+                <option disabled selected>Select your cake</option>
+                <option>Chocolate Cake</option>
+                <option>Strawberry Cake</option>
+                <option>Vanilla Cake</option>
+            </select>
+            <input type="number" name="qty" placeholder="How many cakes?" min="1" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <textarea name="address" placeholder="Delivery Address" rows="3"></textarea>
+            <button type="submit" name="order">Complete Order</button>
+        </form>
+    </div>
 </section>
-<!-- ORDER FORM END-->
+
 </body>
 </html>
