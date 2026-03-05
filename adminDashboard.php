@@ -29,175 +29,252 @@ if(isset($_GET['deleteOrder']))
 /* FETCH USERS */
 $userQuery = "SELECT * FROM users";
 $userResult = mysqli_query($conn,$userQuery);
+$userCount = mysqli_num_rows($userResult);
 
 /* FETCH ORDERS */
 $orderQuery = "SELECT * FROM userOrder";
 $orderResult = mysqli_query($conn,$orderQuery);
-
+$orderCount = mysqli_num_rows($orderResult);
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Frem Bakery</title>
+    <style>
+        :root {
+            --primary: #8b3a2e;
+            --sidebar-bg: #2d2424;
+            --main-bg: #fdfaf7;
+            --text-dark: #333;
+            --white: #ffffff;
+        }
 
-<title>Admin Dashboard</title>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--main-bg);
+            margin: 0;
+            display: flex;
+            color: var(--text-dark);
+        }
 
-<style>
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
+            color: white;
+            padding: 30px 20px;
+        }
 
-body{
-font-family:Arial;
-background:#f5ebe0;
-padding:40px;
-}
+        .sidebar h2 {
+            color: var(--white);
+            font-size: 20px;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
 
-h1{
-text-align:center;
-color:#6b3e26;
-}
+        .sidebar a {
+            display: block;
+            color: #bbb;
+            text-decoration: none;
+            padding: 12px 15px;
+            transition: 0.3s;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
 
-h2{
-margin-top:40px;
-}
+        .sidebar a:hover, .sidebar a.active { 
+            color: white; 
+            background: rgba(255,255,255,0.1);
+        }
 
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-background:white;
-}
+        .logout-link {
+            position: absolute;
+            bottom: 40px;
+            color: #ff7675 !important;
+            width: 220px;
+        }
 
-th,td{
-padding:12px;
-border:1px solid #ddd;
-text-align:center;
-}
+        /* Content */
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+            width: calc(100% - 340px);
+        }
 
-th{
-background:#8b3a2e;
-color:white;
-}
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
 
-button{
-padding:8px 15px;
-background:#8b3a2e;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+        }
 
-button:hover{
-background:#6b2d23;
-}
+        .stat-card h3 { margin: 0; font-size: 14px; color: #888; text-transform: uppercase; }
+        .stat-card p { margin: 10px 0 0; font-size: 28px; font-weight: bold; color: var(--primary); }
 
-.logout{
-float:right;
-margin-bottom:20px;
-}
+        /* Tables */
+        .table-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            display: block; /* Default visible */
+        }
 
-</style>
+        h2 { font-size: 18px; color: var(--primary); text-transform: uppercase; margin-top: 0; }
 
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 15px; background: #f8f9fa; font-size: 12px; color: #888; border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #f1f1f1; font-size: 14px; }
+
+        .btn-delete {
+            background: #fff0f0;
+            color: #d63031;
+            border: 1px solid #ff7675;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-delete:hover { background: #d63031; color: white; }
+
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; background: #e3d5ca; color: #6b3e26; }
+
+    </style>
 </head>
-
 <body>
 
-<h1>Admin Dashboard</h1>
+    <div class="sidebar">
+        <h2>FREM ADMIN</h2>
+        <a onclick="showSection('all')" id="link-all" class="active">Overview</a>
+        <a onclick="showSection('users')" id="link-users">Registered Users</a>
+        <a onclick="showSection('orders')" id="link-orders">Customer Orders</a>
+        <a href="adminLogout.php" class="logout-link">Logout</a>
+    </div>
 
-<div class="logout">
-<a href="adminLogout.php">
-<button>Logout</button>
-</a>
-</div>
+    <div class="main-content">
+        <header style="margin-bottom:30px;">
+            <h1>Dashboard</h1>
+        </header>
 
-<!-- USERS TABLE -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Members</h3>
+                <p><?php echo $userCount; ?></p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p><?php echo $orderCount; ?></p>
+            </div>
+        </div>
 
-<h2>Registered Users</h2>
+        <div class="table-container" id="section-users">
+            <h2>Registered Users</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Login Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($row=mysqli_fetch_assoc($userResult)) { ?>
+                    <tr>
+                        <td>#<?php echo $row['id']; ?></td>
+                        <td><strong><?php echo $row['username']; ?></strong></td>
+                        <td><?php echo $row['login_time']; ?></td>
+                        <td>
+                            <a href="adminDashboard.php?deleteUser=<?php echo $row['id']; ?>" onclick="return confirm('Delete user?');">
+                                <button class="btn-delete">Remove</button>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
 
-<table>
+        <div class="table-container" id="section-orders">
+            <h2>User Orders</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Cake</th>
+                        <th>Qty</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($row=mysqli_fetch_assoc($orderResult)) { ?>
+                    <tr>
+                        <td>#<?php echo $row['id']; ?></td>
+                        <td><strong><?php echo $row['customer_name']; ?></strong></td>
+                        <td><span class="badge"><?php echo $row['cake_type']; ?></span></td>
+                        <td>x<?php echo $row['quantity']; ?></td>
+                        <td><small><?php echo $row['address']; ?></small></td>
+                        <td>
+                            <a href="adminDashboard.php?deleteOrder=<?php echo $row['id']; ?>" onclick="return confirm('Complete order?');">
+                                <button class="btn-delete">Complete</button>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<tr>
-<th>ID</th>
-<th>Username</th>
-<th>Password</th>
-<th>Login Time</th>
-<th>Action</th>
-</tr>
+    <script>
+        function showSection(sectionId) {
+            // Get both containers
+            const userSection = document.getElementById('section-users');
+            const orderSection = document.getElementById('section-orders');
+            
+            // Get all links
+            const links = document.querySelectorAll('.sidebar a');
+            links.forEach(l => l.classList.remove('active'));
 
-<?php
-while($row=mysqli_fetch_assoc($userResult))
-{
-?>
-
-<tr>
-
-<td><?php echo $row['id']; ?></td>
-<td><?php echo $row['username']; ?></td>
-<td><?php echo $row['password']; ?></td>
-<td><?php echo $row['login_time']; ?></td>
-
-<td>
-<a href="adminDashboard.php?deleteUser=<?php echo $row['id']; ?>"
-onclick="return confirm('Are you sure you want to delete this user?');">
-<button>Delete</button>
-</a>
-</td>
-
-</tr>
-
-<?php
-}
-?>
-
-</table>
-
-
-<!-- ORDERS TABLE -->
-
-<h2>User Orders</h2>
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Customer Name</th>
-<th>Cake Type</th>
-<th>Quantity</th>
-<th>Phone</th>
-<th>Address</th>
-<th>Order Time</th>
-<th>Action</th>
-</tr>
-
-<?php
-while($row=mysqli_fetch_assoc($orderResult))
-{
-?>
-
-<tr>
-
-<td><?php echo $row['id']; ?></td>
-<td><?php echo $row['customer_name']; ?></td>
-<td><?php echo $row['cake_type']; ?></td>
-<td><?php echo $row['quantity']; ?></td>
-<td><?php echo $row['phone']; ?></td>
-<td><?php echo $row['address']; ?></td>
-<td><?php echo $row['order_time']; ?></td>
-
-<td>
-<a href="adminDashboard.php?deleteOrder=<?php echo $row['id']; ?>"
-onclick="return confirm('Are you sure you want to delete this order?');">
-<button>Delete</button>
-</a>
-</td>
-
-</tr>
-
-<?php
-}
-?>
-
-</table>
+            if (sectionId === 'users') {
+                userSection.style.display = 'block';
+                orderSection.style.display = 'none';
+                document.getElementById('link-users').classList.add('active');
+            } else if (sectionId === 'orders') {
+                userSection.style.display = 'none';
+                orderSection.style.display = 'block';
+                document.getElementById('link-orders').classList.add('active');
+            } else {
+                userSection.style.display = 'block';
+                orderSection.style.display = 'block';
+                document.getElementById('link-all').classList.add('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
