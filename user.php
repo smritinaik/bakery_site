@@ -29,7 +29,7 @@ if(isset($_POST['login']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Frem Bakery</title>
+    <title>Admin Login | BAKERS Bakery</title>
     <style>
         :root {
             --primary: #8b3a2e;

@@ -30,7 +30,7 @@ if(isset($_POST['login']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Frem Bakery</title>
+    <title>Admin Login | BAKERS Bakery</title>
     <style>
         :root {
             --primary: #8b3a2e;
@@ -143,7 +143,7 @@ if(isset($_POST['login']))
 <body>
 
     <div class="login-container">
-        <h2>Frem Admin</h2>
+        <h2>BAKERS Admin</h2>
         <p class="subtitle">Please enter your credentials to access the dashboard.</p>
 
         <form method="POST">

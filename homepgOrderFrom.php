@@ -21,7 +21,7 @@ if(isset($_POST['order'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frem Bakery | Artisanal Sweets</title>
+    <title>BAKERS Bakery | Artisanal Sweets</title>
     <style>
         :root {
             --primary: #8b3a2e;
@@ -186,7 +186,7 @@ nav li:last-child a::after {
         }
 
         .card {
-            background: var(--card-bg);
+            background: #e3d5ca;
             padding: 20px;
             border-radius: 20px;
             transition: 0.4s;
@@ -347,7 +347,7 @@ nav li:last-child a::after {
 
 <nav>
     <div class="logo">
-        <h2>FREM</h2>
+        <h2>BAKERS</h2>
     </div>
     
     <ul>
@@ -367,22 +367,21 @@ nav li:last-child a::after {
 </section>
 
 <section class="menu" id="menu">
-    <h2>Our Signature Collection</h2>
-    <div class="cards">
+    <h3 class="menu-category-title">Our Best Sellers</h3>    <div class="cards">
         <div class="card">
             <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Chocolate">
             <h3>Midnight Chocolate</h3>
-            <p>$12.00</p>
+            <p>Rs.500/-</p>
         </div>
         <div class="card">
             <img src="https://images.unsplash.com/photo-1559620192-032c4bc4674e" alt="Strawberry">
             <h3>Summer Strawberry</h3>
-            <p>$15.00</p>
+            <p>Rs.470/-</p>
         </div>
         <div class="card">
             <img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa" alt="Vanilla">
             <h3>Classic Vanilla</h3>
-            <p>$10.00</p>
+            <p>Rs.750/-</p>
         </div>
     </div>
 </section>

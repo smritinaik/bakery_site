@@ -42,7 +42,7 @@ $orderCount = mysqli_num_rows($orderResult);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Portal | Frem Bakery</title>
+    <title>Admin Portal | BAKERS Bakery</title>
     <style>
         :root {
             --primary: #8b3a2e;
@@ -166,7 +166,7 @@ $orderCount = mysqli_num_rows($orderResult);
 <body>
 
     <div class="sidebar">
-        <h2>FREM ADMIN</h2>
+        <h2>BAKERS ADMIN</h2>
         <a onclick="showSection('all')" id="link-all" class="active">Overview</a>
         <a onclick="showSection('users')" id="link-users">Registered Users</a>
         <a onclick="showSection('orders')" id="link-orders">Customer Orders</a>
