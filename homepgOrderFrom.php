@@ -456,12 +456,15 @@ nav li:last-child a::after {
                 <option disabled selected>Select your cake</option>
                 <option>Chocolate Cake</option>
                 <option>Strawberry Cake</option>
+                <option>Red Valvet Cake</option>
+                <option>Custard Pudding</option>
+                <option>Brownie</option>
                 <option>Vanilla Cake</option>
             </select>
             <input type="number" name="qty" placeholder="How many cakes?" min="1" required>
             <input type="text" name="phone" placeholder="Phone Number" required>
             <textarea name="address" placeholder="Delivery Address" rows="3"></textarea>
-            <button type="submit" name="order">Complete Order</button>
+            <button type="submit" name="order">Place Order</button>
         </form>
     </div>
 </section>
