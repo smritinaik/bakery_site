@@ -25,7 +25,7 @@ if(isset($_POST['order'])) {
     <style>
         :root {
             --primary: #8b3a2e;
-            --bg: #faf7f2;
+            --bg: #ebe4d9;
             --card-bg: #ffffff;
             --text: #2d2424;
             --accent: #e3d5ca;
@@ -45,13 +45,15 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 20px 8%;
-    background: rgba(250, 247, 242, 0.8); /* Semi-transparent */
+    background: rgb(219, 203, 177); /* Semi-transparent */
     backdrop-filter: blur(10px); /* Modern Glassmorphism effect */
     position: sticky;
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid rgba(139, 58, 46, 0.1);
     transition: all 0.3s ease;
+    margin : 25px;
+    border-radius: 60px;
 }
 
 nav h2 {
@@ -194,7 +196,7 @@ nav li:last-child a::after {
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-28px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
@@ -282,7 +284,7 @@ nav li:last-child a::after {
         /* Full Menu Section */
 .full-menu {
     padding: 100px 8%;
-    background-color: #fff;
+    background-color: #ebe4d9;
 }
 
 .menu-grid {
@@ -312,8 +314,8 @@ nav li:last-child a::after {
 }
 
 .menu-item:hover {
-    border-bottom: 1px solid var(--primary);
-    transform: translateX(5px);
+    border-bottom: 1px solid #6b2e25;
+    transform: translateX(15px);
 }
 
 .item-info h4 {
@@ -359,7 +361,7 @@ nav li:last-child a::after {
 
 <section class="hero">
     <div class="hero-text">
-        <h1>Sweet Moments <br>Start Here</h1>
+        <h1 style="color: #42221d">Sweet Moments <br>Start Here</h1>
         <p>Experience the art of artisanal baking. Every cake is handcrafted with premium ingredients and a dash of love.</p>
         <button class="cta-btn">Explore Menu</button>
     </div>

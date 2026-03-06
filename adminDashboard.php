@@ -47,7 +47,7 @@ $orderCount = mysqli_num_rows($orderResult);
         :root {
             --primary: #8b3a2e;
             --sidebar-bg: #2d2424;
-            --main-bg: #fdfaf7;
+            --main-bg: #f3e1cf;
             --text-dark: #333;
             --white: #ffffff;
         }
