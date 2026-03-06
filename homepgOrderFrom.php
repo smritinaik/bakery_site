@@ -169,7 +169,7 @@ nav li:last-child a::after {
             height: 500px;
             object-fit: cover;
             border-radius: 30px;
-            box-shadow: 20px 20px 0px var(--accent);
+            /* box-shadow: 20px 20px 0px var(--accent); */
         }
 
         /* Menu Section */
@@ -365,24 +365,24 @@ nav li:last-child a::after {
         <p>Experience the art of artisanal baking. Every cake is handcrafted with premium ingredients and a dash of love.</p>
         <button class="cta-btn">Explore Menu</button>
     </div>
-    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b" alt="Featured Dessert">
+    <img src="img/cake.png" alt="Featured Dessert">
 </section>
 
 <section class="menu" id="menu">
     <h3 class="menu-category-title">Our Best Sellers</h3>    <div class="cards">
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Chocolate">
-            <h3>Midnight Chocolate</h3>
-            <p>Rs.500/-</p>
-        </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1559620192-032c4bc4674e" alt="Strawberry">
-            <h3>Summer Strawberry</h3>
+            <img src="img/velvet.jpg" alt="Strawberry">
+            <h3>Red Velvet Cake</h3>
             <p>Rs.470/-</p>
         </div>
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa" alt="Vanilla">
-            <h3>Classic Vanilla</h3>
+            <img src="img/blueberry.jpg" alt="Chocolate">
+            <h3>Blue Berry cake</h3>
+            <p>Rs.500/-</p>
+        </div>
+        <div class="card">
+            <img src="img/forest.jpg" alt="Vanilla">
+            <h3> Black forest</h3>
             <p>Rs.750/-</p>
         </div>
     </div>
@@ -469,6 +469,17 @@ nav li:last-child a::after {
         </form>
     </div>
 </section>
+
+
+<footer style="
+margin-top:40px;
+padding:15px;
+text-align:center;
+font-size:13px;
+color:#5e4343;
+">
+© <?php echo date("Y"); ?> BAKERS Bakery  | Developed and Designed by smriti
+</footer>
 
 </body>
 </html>
